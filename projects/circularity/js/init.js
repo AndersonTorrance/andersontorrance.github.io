@@ -49,6 +49,7 @@ var init = function (window) {
         */
         function update() {
             // TODO 4 : Update the circle's position //
+            
             for(var i = 0; i < circles.length; i++){
              var eachCirlce = circles[i];
                  physikz.updatePosition(eachCirlce);
@@ -82,7 +83,7 @@ var init = function (window) {
                 circle.y = 0;
             }
             if (circle.x < 0) {
-                circle.x = width.width;
+                circle.x = canvas.width;
             }
             if (circle.y < 0) {
                 circle.y = canvas.height;

@@ -119,6 +119,19 @@ function moveSnake() {
   column/row properties. 
   
   */
+  for (var i = snake.body.length - 1; i > 0; i--) {
+    var snakeSquare = snake.body[i];
+
+    var nextSnakeSquare = snake.body[i + 1];
+    var nextRow = snake.body[i - 1].row;
+    var nextColumn = snake.body[i - 1].column;
+    var nextDirection = snake.body[i - 1].direction;
+
+    snakeSquare.direction = nextDirection;
+    snakeSquare.row = nextRow;
+    snakeSquare.column = nextColumn;
+    repositionSquare(snakeSquare);
+}
 
   //Before moving the head, check for a new direction from the keyboard input
   checkForNewDirection();
@@ -180,12 +193,10 @@ function hasCollidedWithApple() {
   
   HINT: Both the apple and the snake's head are aware of their own row and column
   */
-if (snake.head.row === apple.row){
+if (snake.head.row === apple.row && snake.head.column === apple.column){
   handleAppleCollision();
  }
- if (snake.head.column === apple.column){
-  handleAppleCollision();
- }
+
   return false;
 }
 
@@ -207,9 +218,21 @@ function handleAppleCollision() {
   If the tail is moving "down", place the next snakeSquare above it.
   etc...
   */
-  var row = 0;
-  var column = 0;
+  var row = snake.tail.row + 0;
+  var column =snake.tail.column + 0;
 
+  if(snake.tail.direction === "up"){
+    row + 1
+  }
+  if(snake.tail.direction === "down"){
+    row - 1
+  }
+  if(snake.tail.direction === "left"){
+    row + 1
+  }
+  if(snake.tail.direction === "right"){
+    row - 1
+  }
   // code to determine the row and column of the snakeSquare to add to the snake
 
   makeSnakeSquare(row, column);
@@ -224,8 +247,13 @@ function hasCollidedWithSnake() {
   head and each part of the snake's body also knows its own row and column.
   
   */
-
-  return false;
+  for(var i = 1; i < snake.body.length; i++){
+    if(snake.head.row === snake.body[i].row && snake.head.column === snake.body[i].column){
+      return true
+    }
+    }
+  
+    return false;
 }
 
 function endGame() {
@@ -344,6 +372,11 @@ function getRandomAvailablePosition() {
     spaceIsAvailable to false so that a new position is generated.
     */
   }
+ /* for(var i = 0; i < snake.body.length; i++){
+    if(randomPosition.column === snake.body.colum || randomPosition.row === snake.body.row){
+      spaceIsAvailable = false; ,
+    }
+  }*/
 
   return randomPosition;
 }

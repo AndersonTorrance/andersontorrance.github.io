@@ -15,6 +15,10 @@ function runProgram(){
     "RIGHT": 39,
     "UP": 38,
     "DOWN": 40,
+    "LEFT2":65,
+    "RIGHT2":68,
+    "DOWN2":83,
+    "UP2":87,
   };
   var walker = {
     "positionX": 0,
@@ -22,6 +26,14 @@ function runProgram(){
     "speedX": 0,
     "speedY": 0,
   }
+  var walker2 = {
+    "positionX": 0,
+    "positionY": 0,
+    "speedX": 0,
+    "speedY": 0,
+  }
+  var boardW = $("#board").width();
+  var boardH = $("#board").height();
   // Game Item Objects
 
 
@@ -39,9 +51,8 @@ function runProgram(){
   */
   function newFrame() {
     repositionGameItem();
-    wallCollision();
     redrawGameItem();
-
+    wallCollision();
   }
   
   /* 
@@ -64,11 +75,29 @@ function runProgram(){
       console.log("Up")
       walker.speedY = -5;
     }
+    if (event.which === KEY.LEFT2) {
+      console.log("Left")
+      walker2.speedX = -5;
+    }
+    if (event.which === KEY.RIGHT2) {
+      console.log("Right")
+      walker2.speedX = 5;
+    }
+    if (event.which === KEY.DOWN2) {
+      console.log("Down")
+      walker2.speedY = 5;
+    }
+    if (event.which === KEY.UP2) {
+      console.log("Up")
+      walker2.speedY = -5;
+    }
   }
   
 function handleKeyUp() {
   walker.speedX = 0;
   walker.speedY = 0;
+  walker2.speedX = 0;
+  walker2.speedY = 0;
 }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -79,16 +108,32 @@ function handleKeyUp() {
   function repositionGameItem(){
     walker.positionX += walker.speedX;
     walker.positionY += walker.speedY;
+    walker2.positionX += walker2.speedX;
+    walker2.positionY += walker2.speedY;
   }
    function wallCollision(){
-    $("board").width();
-    $("board").height();
+   if (walker.positionX > boardW){
+    walker.positionX = boardW;
+   }
+   if (walker.positionX < 0){
+    walker.positionX = 0;
+   }
+   if (walker.positionY > boardH){
+    walker.positionY = boardH;
+   }
+   if (walker.positionY < 0){
+    walker.positionY = 0;
+   }
    }
   function redrawGameItem(){
     $("#walker").css("left", walker.positionX);
     $("#walker").css("bottom", walker.positionY);
     $("#walker").css("right", walker.positionX);
     $("#walker").css("top", walker.positionY);
+    $("#walker2").css("left", walker2.positionX);
+    $("#walker2").css("bottom", walker2.positionY);
+    $("#walker2").css("right", walker2.positionX);
+    $("#walker2").css("top", walker2.positionY);
   }
   
   function endGame() {
